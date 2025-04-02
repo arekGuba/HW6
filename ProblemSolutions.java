@@ -62,13 +62,32 @@
       * returning the 0 if queue is empty else return pq.peek().
       */
  
-   public static int lastBoulder(int[] boulders) {
- 
-       //
-       // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME / SECTION # ABOVE
-       //
-       return -1;
-   }
+     public static int lastBoulder(int[] boulders) {
+
+         //
+         // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME / SECTION # ABOVE
+         //
+
+         // create a maxheap of the integers from boulders
+         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+         for (int i : boulders) {
+             maxHeap.add(i);
+         }
+
+         // smash rocks!! as long as at least 2 rocks exist to be smashed.
+         // push 2 ints off maxHeap to get the 2 biggest rocks. if the result
+         // is 0, do nothing, else add the result back into maxHeap
+         while (maxHeap.size() > 1){
+            int bigRock = maxHeap.poll();
+            int smallRock = maxHeap.poll();
+            if (bigRock - smallRock > 0){
+                maxHeap.add(bigRock - smallRock);
+            }
+         }
+
+         // if an element exists in maxHeap when we're done, return it. else, return 0
+         return maxHeap.peek() != null ? maxHeap.peek() : 0;
+     }
  
  
      /**
